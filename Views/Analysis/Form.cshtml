@@ -1,0 +1,26 @@
+﻿@model EcoBuildAI.Models.ConstructionInput
+
+<div class="form-container">
+    <h2>🌱 Construction Environmental Analysis</h2>
+
+    <form asp-action="Submit" method="post">
+
+        <label>Email</label>
+        <input asp-for="ClientEmail" placeholder="example@email.com" />
+
+        <label>Location</label>
+        <input asp-for="Location" placeholder="City / Near water / Rural area" />
+
+        <label>Construction Type</label>
+        <input asp-for="ConstructionType" placeholder="House, building, road..." />
+
+        <label>Materials</label>
+        <input asp-for="Materials" placeholder="Concrete, steel, wood..." />
+
+        <label>Area Size (m²)</label>
+        <input asp-for="AreaSize" placeholder="e.g. 120" />
+
+        <button type="submit">Analyze Project</button>
+
+    </form>
+</div>
