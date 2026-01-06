@@ -1,22 +1,30 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services
 builder.Services.AddControllersWithViews();
+
+// Configure Kestrel to listen on the environment port
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrEmpty(port))
+{
+    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+}
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Middleware
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Analysis/Form");
-
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-app.UseRouting();
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
+app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -25,6 +33,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Analysis}/{action=Form}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();
